@@ -1,7 +1,7 @@
 from src.models.entities.check_ins import CheckIns
 from src.models.settings.connection import DB_CONNECTION_HANDLER
 
-from sqlalchemy.exc import IntegrityError, NoResultFound
+from sqlalchemy.exc import IntegrityError
 
 class CheckInsRepository:
 
