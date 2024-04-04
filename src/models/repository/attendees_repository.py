@@ -8,7 +8,7 @@ from src.models.entities.check_ins import CheckIns
 
 from sqlalchemy.engine.row import Row
 from sqlalchemy.exc import IntegrityError, NoResultFound
-
+from src.errors.error_types.http_conflict import HttpConflictError
 
 class AttendeesRepository:
 
@@ -32,7 +32,7 @@ class AttendeesRepository:
 
             except IntegrityError:
 
-                raise Exception("Participante já cadastrado!")
+                raise HttpConflictError("Participante já cadastrado!")
 
             except Exception as exception:
 

@@ -6,6 +6,7 @@ from src.models.entities.attendees import Attendees
 
 from sqlalchemy.exc import IntegrityError, NoResultFound
 
+from src.errors.error_types.http_conflict import HttpConflictError
 
 class EventsRepository:
 
@@ -29,7 +30,7 @@ class EventsRepository:
 
             except IntegrityError:
 
-                raise Exception("Evento já cadastrado!")
+                raise HttpConflictError("Evento já cadastrado!")
 
             except Exception as exception:
 

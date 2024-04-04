@@ -6,6 +6,9 @@ from src.models.repository.events_repository import EventsRepository
 from src.http_types.http_request import HttpRequest
 from src.http_types.http_response import HttpResponse
 
+from src.errors.error_types.http_not_found import HttpNotFoundError
+from src.errors.error_types.http_conflict import HttpConflictError
+
 
 class AttendeesHandler:
 
@@ -23,7 +26,7 @@ class AttendeesHandler:
             event_id)
 
         if event_attendees_count["maximumAttendees"] <= event_attendees_count["attendeesAmount"]:
-            raise Exception("Evento lotado!")
+            raise HttpConflictError("Evento lotado!")
 
         body["uuid"] = str(uuid.uuid4())
         body["event_id"] = event_id
@@ -41,7 +44,7 @@ class AttendeesHandler:
         badge = self.__attendees_repository.get_attendee_badge_by_id(
             attendee_id)
         
-        if not badge: raise Exception("Participante não encontrado!")
+        if not badge: raise HttpNotFoundError("Participante não encontrado!")
 
         return HttpResponse(
             body={
@@ -59,7 +62,7 @@ class AttendeesHandler:
 
         attendees = self.__attendees_repository.get_attendees_by_event_id(event_id)
 
-        if not attendees: raise Exception("Participantes não encontrados!")
+        if not attendees: raise HttpNotFoundError("Participantes não encontrados!")
 
         formatted_attendees = [
             {

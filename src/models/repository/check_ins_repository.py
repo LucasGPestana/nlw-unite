@@ -2,6 +2,7 @@ from src.models.entities.check_ins import CheckIns
 from src.models.settings.connection import DB_CONNECTION_HANDLER
 
 from sqlalchemy.exc import IntegrityError
+from src.errors.error_types.http_conflict import HttpConflictError
 
 class CheckInsRepository:
 
@@ -22,7 +23,7 @@ class CheckInsRepository:
       
       except IntegrityError:
 
-        raise Exception("Check-in já cadastrado!")
+        raise HttpConflictError("Check-in já cadastrado!")
       
       except Exception as exception:
 
